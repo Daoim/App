@@ -5,34 +5,51 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 <script>
-	/**
-	 * Determine the mobile operating system.
-	 * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
-	 *
-	 * @returns {String}
-	 */
-	$(document).ready(function(){
-	  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-		  // Windows Phone must come first because its UA also contains "Android"
-		if (/windows phone/i.test(userAgent)) {
-			//return "Windows Phone";
-			alert('Windows Phone');
+	var isMobile = {
+		Android: function() {
+			return navigator.userAgent.match(/Android/i);
+		},
+		BlackBerry: function() {
+			return navigator.userAgent.match(/BlackBerry/i);
+		},
+		iOS: function() {
+			return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+		},
+		Opera: function() {
+			return navigator.userAgent.match(/Opera Mini/i);
+		},
+		Windows: function() {
+			return navigator.userAgent.match(/IEMobile/i);
+		},
+		any: function() {
+			return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+		},
+		none: function() {
+			return (!isMobile.any());
 		}
-
-		if (/android/i.test(userAgent)) {
-			//return "Android";
-			alert('Android');
-		}
-
-		// iOS detection from: http://stackoverflow.com/a/9039885/177710
-		if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-			//return "iOS";
-			alert('iOS');
-		}
-
-		return "unknown";
-	}
+	};
+	
+	
+</script>
+<script type="text/javascript">
+    if (isMobile.any()){
+        document.write('Mobile');
+        if (isMobile.iOS()){
+            document.write('/iOS');
+        } else if (isMobile.Android()){
+            document.write('/Android');
+        } else if (isMobile.BlackBerry()){
+            document.write('/BlackBerry');
+        } else if (isMobile.Windows()){
+            document.write('/Windows');
+        } else {
+            document.write('/other');
+        }
+    } else if (isMobile.none()) {
+        document.write('non-mobile');
+    } else {
+        document.write('unknown');
+    }
 </script>
 
 </body>
