@@ -2,29 +2,37 @@
 <html>
 <body>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 <script>
-	$(document).ready(function(){
-		/* Get browser */
-		$.browser.chrome = /chrome/.test(navigator.userAgent.toLowerCase());
+	/**
+	 * Determine the mobile operating system.
+	 * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
+	 *
+	 * @returns {String}
+	 */
+	function getMobileOperatingSystem() {
+	  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-		/* Detect Chrome */
-		if($.browser.chrome){
-			/* Do something for Chrome at this point */
-			window.location.href = "https://play.google.com/store/apps/details?id=vn.com.thaco.bmwservice&hl=vi";
-			
-			/* Finally, if it is Chrome then jQuery thinks it's 
-			   Safari so we have to tell it isn't */
-			$.browser.safari = false;
+		  // Windows Phone must come first because its UA also contains "Android"
+		if (/windows phone/i.test(userAgent)) {
+			//return "Windows Phone";
+			alert('Windows Phone');
 		}
 
-		/* Detect Safari */
-		if($.browser.safari){
-			/* Do something for Safari */
-			window.location.href = "https://www.apple.com/vn/iphone/";
+		if (/android/i.test(userAgent)) {
+			//return "Android";
+			alert('Android');
 		}
 
-	});
+		// iOS detection from: http://stackoverflow.com/a/9039885/177710
+		if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+			//return "iOS";
+			alert('iOS');
+		}
+
+		return "unknown";
+	}
 </script>
 
 </body>
